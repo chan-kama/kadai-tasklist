@@ -11,6 +11,11 @@
                     <!-- 第2引数（連想配列部）はHTMLタグのaction属性にあたる　method="POST"にあたる部分はデフォルトなので省略） -->
             
                 <div class="form-group">
+                    {!! Form::label('status', 'ステータス：') !!}
+                    {!! Form::text('status', null, ['class' => 'form-control']) !!}
+                </div>
+                
+                <div class="form-group">
                     {!! Form::label('content', 'タスク：') !!}   <!-- Form::labelはフォームのラベル作成のためのLaravelCollective関数　<form>にあたる -->
                         <!-- 第1引数はインスタンス（$task）のcontentカラムを与える　第2引数はラベル名 -->
                     {!! Form::text('content', null, ['class' => 'form-control']) !!}   <!-- Form::textはフォームのテキスト入力欄作成のためのLaravelCollective関数　<input type="text">にあたる -->

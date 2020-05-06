@@ -9,6 +9,7 @@
             <thead>
                 <tr>
                     <th>id</th>
+                    <th>ステータス</th>
                     <th>タスク</th>
                 </tr>
             </thead>
@@ -17,6 +18,7 @@
                 <tr>
                     <td>{!! link_to_route('tasks.show', $task->id, ['id' => $task->id]) !!}</td>   <!-- 第1引数はリンク先　第2引数はリンク表示させる文字列（今回は$taskからidを取得して表示） -->
                                                                                                 <!-- 第3引数はリンク先のURL末尾に代入する値（今回は$taskからidを取得） -->
+                    <td>{{ $task->status }}</td>
                     <td>{{ $task->content }}</td>   <!-- $task内のcontentカラムを取得 -->
                 </tr>
                 @endforeach

@@ -10,6 +10,10 @@
             <td>{{ $task->id }}</td>   <!-- レコード$taskのidを表示 -->
         </tr>
         <tr>
+            <th>ステータス</th>
+            <td>{{ $task->status }}</td>   <!-- レコード$taskのcontentの内容を表示 -->
+        </tr>
+        <tr>
             <th>タスク</th>
             <td>{{ $task->content }}</td>   <!-- レコード$taskのcontentの内容を表示 -->
         </tr>

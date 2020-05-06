@@ -45,7 +45,13 @@ class TasksController extends Controller
      */
     public function store(Request $request)   // createアクションのフォームから送信されたデータは$requestに入っている
     {
+        $this->validate($request, [
+            'status' => 'required|max:10',
+            'content' => 'required|max:191', 
+        ]);
+        
         $task = new Task;   // Taskモデルからインスタンスを作成し$taskに代入
+        $task->status = $request->status;
         $task->content = $request->content;   // $requestのcontent（createアクションのフォームに入力された新しいタスク）を$taskインスタンスのcontentに代入
         $task->save();   // 新しいcontent（新しいタスク）をテーブルに保存
         
@@ -91,7 +97,13 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)   // editアクションのフォームから送信されたデータは$requestに入っている
     {
+        $this->validate($request, [
+            'status' => 'required|max:10',
+            'content' => 'required|max:191', 
+        ]);
+        
         $task = Task::find($id);   // Task Modelの$idに該当するレコードを取得
+        $task->status = $request->status;
         $task->content = $request->content;   // $requestのcontent（editアクションによる修正されたタスク）を$taskインスタンスのcontentに代入
         $task->save();   // content（修正されたタスク）をテーブルに保存
         
