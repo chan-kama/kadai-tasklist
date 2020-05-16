@@ -29,5 +29,7 @@
     {!! link_to_route('tasks.create', '新規タスクの追加', [], ['class' => 'btn btn-primary']) !!}   <!-- 新規タスクの追加ボタンを設置 -->
         <!-- link_to_routeはリンク作成のためのLaravelCollective関数　第1引数はリンク先　第2引数はリンク表示させる文字列 -->
         <!-- 第3引数はリンク先のURL末尾に代入する値（今回は不要なので空欄）　第4引数はHTMLタグの属性を指定（今回はHTMLでclass="btn btn-primary"となる） -->
-        
+    
+    {!! link_to_route('signup.get', 'Sign up now!', [], ['class' => 'btn btn-lg btn-success']) !!}
+    
 @endsection
