@@ -15,18 +15,11 @@ class TasksController extends Controller
      */
     public function index()
     {
-        $data = [];
-        if (\Auth::check()) {
-            $user = \Auth::user();
-            $tasks = $user->tasks()->orderBy('created_at', 'desc')->get();
-            
-            $data = [
-                'user' => $user,
-                'tasks' => $tasks,
-            ];
-        }
+        $tasks = Task::all();   // Task Modelの全レコードを取得　$taskに代入
         
-        return view('tasks.index', $data);
+        return view('tasks.index', [   // tasksフォルダのindex.blade.php（indexのview）を呼び出し
+            'tasks' => $tasks,   // tasksはviewに渡す変数名（viewに渡す時はtasksから$tasksへ）　
+        ]);                         // tasksに$tasks（Task Modelの全レコード）の内容を代入
     }
 
     /**
@@ -57,12 +50,12 @@ class TasksController extends Controller
             'content' => 'required|max:191', 
         ]);
         
-        $request->user()->tasks()->create([
-            'status' => $request->status,
-            'content' => $request->content,
-        ]);
-
-        return back();
+        $task = new Task;   // Taskモデルからインスタンスを作成し$taskに代入
+        $task->status = $request->status;
+        $task->content = $request->content;   // $requestのcontent（createアクションのフォームに入力された新しいタスク）を$taskインスタンスのcontentに代入
+        $task->save();   // 新しいcontent（新しいタスク）をテーブルに保存
+        
+        return redirect('/');   // トップページへ遷移
     }
 
     /**
@@ -73,15 +66,11 @@ class TasksController extends Controller
      */
     public function show($id)
     {
-        $task = \App\Task::find($id);
-
-        if (\Auth::id() === $task->user_id) {
-            return view('tasks.show', [
-                'task' => $task,
-            ]);
-        }
+        $task = Task::find($id);   // Task Modelの$idに該当するレコードを取得
         
-        return redirect('/');;
+        return view('tasks.show', [   // tasksフォルダのshow.blade.php（showのview）を呼び出し
+            'task' => $task,   // taskはviewに渡す変数名（viewに渡す時はtaskから$taskへ）　
+        ]);
     }
 
     /**
@@ -129,12 +118,9 @@ class TasksController extends Controller
      */
     public function destroy($id)
     {
-        $task = \App\Task::find($id);
-
-        if (\Auth::id() === $task->user_id) {
-            $task->delete();
-        }
-
-        return redirect('/');
+        $task = Task::find($id);   // Task Modelの$idに該当するレコードを取得
+        $task->delete();   // 取得されたレコード（$task)をテーブルから削除
+        
+        return redirect('/');   // トップページへ遷移
     }
 }

@@ -23,10 +23,10 @@
         <!-- 第1引数はリンク先　第2引数はリンク表示させる文字列 -->
         <!-- 第3引数はリンク先のURL末尾に代入する値（今回は$taskから取得したid）　第4引数はHTMLタグの属性を指定 -->
         
-    {!! Form::model($task, ['route' => ['tasks.destroy', $task->id], 'method' => 'delete']) !!}
-            <!-- 第1引数（$task）は対象となるインスタンス（destroyアクションで作成したもの） -->
-                    <!-- 第2引数はHTMLタグのaction属性　method属性も指定 -->
-        {!! Form::submit('削除', ['class' => 'btn btn-danger']) !!}   <!-- 削除ボタンの生成 -->
-    {!! Form::close() !!}   <!-- フォーム終了 -->
+    
+        {!! Form::open(['route' => ['tasks.destroy', $task->id], 'method' => 'delete']) !!}
+            {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
+        {!! Form::close() !!}
+    
 
 @endsection
