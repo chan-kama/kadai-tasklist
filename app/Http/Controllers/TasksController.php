@@ -62,7 +62,7 @@ class TasksController extends Controller
             'content' => $request->content,
         ]);
 
-        return back();
+        return redirect('/');
     }
 
     /**
@@ -81,7 +81,7 @@ class TasksController extends Controller
             ]);
         }
         
-        return redirect('/');;
+        return redirect('/');
     }
 
     /**
@@ -94,9 +94,11 @@ class TasksController extends Controller
     {
         $task = Task::find($id);   // Task Modelの$idに該当するレコードを取得
         
-        return view('tasks.edit', [   // tasksフォルダのedit.blade.php（editのview）を呼び出し
-            'task' => $task,            // taskはviewに渡す変数名（viewに渡す時はtaskから$taskへ）　
-        ]);
+        if (\Auth::id() === $task->user_id) {
+            return view('tasks.edit', [   // tasksフォルダのedit.blade.php（editのview）を呼び出し
+                'task' => $task,            // taskはviewに渡す変数名（viewに渡す時はtaskから$taskへ）　
+            ]);
+        }
     }
 
     /**
@@ -114,9 +116,11 @@ class TasksController extends Controller
         ]);
         
         $task = Task::find($id);   // Task Modelの$idに該当するレコードを取得
-        $task->status = $request->status;
-        $task->content = $request->content;   // $requestのcontent（editアクションによる修正されたタスク）を$taskインスタンスのcontentに代入
-        $task->save();   // content（修正されたタスク）をテーブルに保存
+        if (\Auth::id() === $task->user_id) {    
+            $task->status = $request->status;
+            $task->content = $request->content;   // $requestのcontent（editアクションによる修正されたタスク）を$taskインスタンスのcontentに代入
+            $task->save();   // content（修正されたタスク）をテーブルに保存
+        }
         
         return redirect('/');   // トップページへ遷移
     }
